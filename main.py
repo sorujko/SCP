@@ -91,12 +91,23 @@ if min_val and max_val:
 if rows_limit:
     df = df.head(rows_limit)
 
-if tag_activated == 1 and level_activated ==0:
-    if tag_activated =='ASC':
-        a = True
+if tag_activated == 1 and level_activated == 0:
+    # Create a custom sorting key based on the presence of chosen tags
+    def custom_tag_sort(tags_list):
+        chosen_tags_present = [tag for tag in tags if tag in tags_list]
+        return len(chosen_tags_present)
+
+    # Apply the custom sorting key to the DataFrame
+    df['TagSortKey'] = df['Tags'].apply(custom_tag_sort)
+
+    # Sort the DataFrame based on the custom sorting key
+    if tag_choice == 'ASC':
+        df = df.sort_values(by='TagSortKey', ascending=True).drop(columns=['TagSortKey'])
     else:
-        a = False
-    df=df.sort_values(by=['Tags'], ascending=[a])
+        df = df.sort_values(by='TagSortKey', ascending=False).drop(columns=['TagSortKey'])
+
+# ... (rest of your code for displaying the DataFrame)
+
 
 elif tag_activated == 0 and level_activated ==1:
     if level_choice =='ASC':
@@ -110,14 +121,44 @@ elif level_activated == 2 and tag_activated ==1:
         a = True
     else:
         a = False
-    df=df.sort_values(by=['Level','Tags'], ascending=[a,a])
+    
+    # Create a custom sorting key based on the presence of chosen tags
+    def custom_tag_sort(tags_list):
+        chosen_tags_present = [tag for tag in tags if tag in tags_list]
+        return len(chosen_tags_present)
+
+    # Apply the custom sorting key to the DataFrame
+    df['TagSortKey'] = df['Tags'].apply(custom_tag_sort)
+
+    # Sort the DataFrame based on the custom sorting key
+    if tag_choice == 'ASC':
+        b=True
+    else:
+        b= False
+    
+    df=df.sort_values(by=['Level','TagSortKey'], ascending=[a,b]).drop(columns=['TagSortKey'])
 
 elif level_activated == 1 and tag_activated ==2:
     if level_choice =='ASC':
         a = True
     else:
         a = False
-    df=df.sort_values(by=['Tags','Level'], ascending=[a,a])
+    
+    # Create a custom sorting key based on the presence of chosen tags
+    def custom_tag_sort(tags_list):
+        chosen_tags_present = [tag for tag in tags if tag in tags_list]
+        return len(chosen_tags_present)
+
+    # Apply the custom sorting key to the DataFrame
+    df['TagSortKey'] = df['Tags'].apply(custom_tag_sort)
+
+    # Sort the DataFrame based on the custom sorting key
+    if tag_choice == 'ASC':
+        b=True
+    else:
+        b= False
+    
+    df=df.sort_values(by=['TagSortKey','Level'], ascending=[b,a]).drop(columns=['TagSortKey'])
 
 
 
