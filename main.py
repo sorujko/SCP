@@ -179,34 +179,31 @@ with tab1:
 
 
 with tab2:
-        
-    
-    a=df['Level'].value_counts().to_dict()
-    
-    
-    if levels :
-        pass
+
+    if not levels :
+        st.write("Pre zobrazenie grafu Levelov  vyberte nejaké z ponuky")
     else:
+        a=df['Level'].value_counts().to_dict()
         a = dict(list(a.items())[:3])
     
-    farby=[]
-    for item in a.keys():
-        farby.append(f'#{random.randrange(256**3):06x}')
-    fig = make_subplots(rows=1, cols=2 ,specs=[[{'type': 'xy'},{'type': 'domain'}]] )
+        farby=[]
+        for item in a.keys():
+            farby.append(f'#{random.randrange(256**3):06x}')
+        fig = make_subplots(rows=1, cols=2 ,specs=[[{'type': 'xy'},{'type': 'domain'}]] )
 
-    fig.add_trace(
-        go.Bar(x=list(a.keys()), y=list(a.values()),marker=dict(color=farby), 
-               showlegend=False ,name='',hovertemplate='Level=%{x}, pocet=%{y}') ,
-        row=1, col=1
-    )
+        fig.add_trace(
+            go.Bar(x=list(a.keys()), y=list(a.values()),marker=dict(color=farby), 
+                showlegend=False ,name='',hovertemplate='Level=%{x}, pocet=%{y}') ,
+            row=1, col=1
+        )
 
-    fig.add_trace(
-        go.Pie(labels=list(a.keys()), values=list(a.values()),marker=dict(colors=farby),name='',
-            hovertemplate='Level: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
-        row=1, col=2
-    )
+        fig.add_trace(
+            go.Pie(labels=list(a.keys()), values=list(a.values()),marker=dict(colors=farby),name='',
+                hovertemplate='Level: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
+            row=1, col=2
+        )
 
-    st.plotly_chart(fig)
+        st.plotly_chart(fig)
     
     if tags and tags_choice == 'OR':
         # Initialize a dictionary to store tag counts
@@ -243,4 +240,6 @@ with tab2:
         )
 
         st.plotly_chart(fig)
+    else:
+        st.write("Pre zobrazenie grafu Tagov  vyberte nejaké z ponuky")
 
