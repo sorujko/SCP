@@ -32,7 +32,7 @@ with st.sidebar:
         tags =st.multiselect(label='Tags', options=tags_options)
         
     with col2:
-        tags_choice = st.radio(label='',options=["AND", "OR"] , key='dsadsaxx')
+        tags_choice = st.radio(label='',options=["OR", "AND"] , key='dsadsaxx')
         
     
     st.write('Choose rating range:')
