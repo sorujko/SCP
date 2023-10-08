@@ -175,20 +175,7 @@ tab1, tab2 = st.tabs(["DataFrame", "Graphs"])
 
 with tab1:    
     st.dataframe(data=df, hide_index=True,width=1000, height=700)
-    @st.cache_data
-    def convert_df(df):
-        return df.to_csv(index=False).encode('utf-8')
-
-
-    csv = convert_df(df)
-
-    st.download_button(
-    "Press to Download",
-    csv,
-    "SCP_Dataset.csv",
-    "text/csv",
-    key='download-csv'
-    )
+  
 
 
 
