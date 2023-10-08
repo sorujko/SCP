@@ -78,7 +78,7 @@ with st.sidebar:
         
     
     #sorted_df = df.sort_values(by=['A', 'B'], ascending=[True, False])
-st.title('Diplomovka')
+st.title('DIPLOMOVKA')
 
 
 if levels:
