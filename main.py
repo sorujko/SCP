@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import plotly.express as px
+import random
 
 st. set_page_config(layout="wide")
 df = pd.read_csv('SCP-database.csv')
@@ -171,10 +176,7 @@ tab1, tab2 = st.tabs(["DataFrame", "Graphs"])
 with tab1:    
     st.dataframe(data=df, hide_index=True,width=1000, height=700)
 
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-import plotly.express as px
-import random
+
 
 with tab2:
         
