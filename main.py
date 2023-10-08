@@ -166,5 +166,79 @@ elif level_activated == 1 and tag_activated ==2:
 
 
     
-st.dataframe(data=df, hide_index=True,width=1000, height=700)
+tab1, tab2 = st.tabs(["DataFrame", "Graphs"])
+
+with tab1:    
+    st.dataframe(data=df, hide_index=True,width=1000, height=700)
+
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import plotly.express as px
+import random
+
+with tab2:
+        
+    
+    a=df['Level'].value_counts().to_dict()
+    
+    
+    if levels :
+        pass
+    else:
+        a = dict(list(a.items())[:3])
+    
+    farby=[]
+    for item in a.keys():
+        farby.append(f'#{random.randrange(256**3):06x}')
+    fig = make_subplots(rows=1, cols=2 ,specs=[[{'type': 'xy'},{'type': 'domain'}]] )
+
+    fig.add_trace(
+        go.Bar(x=list(a.keys()), y=list(a.values()),marker=dict(color=farby), 
+               showlegend=False ,name='',hovertemplate='Level=%{x}, pocet=%{y}') ,
+        row=1, col=1
+    )
+
+    fig.add_trace(
+        go.Pie(labels=list(a.keys()), values=list(a.values()),marker=dict(colors=farby),name='',
+            hovertemplate='Level: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
+        row=1, col=2
+    )
+
+    st.plotly_chart(fig)
+    
+    if tags and tags_choice == 'OR':
+        # Initialize a dictionary to store tag counts
+        tag_counts = {}
+        
+        
+        
+        # Count the number of rows for each selected tag
+        for tag in tags:
+            tag_counts[tag] = df[df['Tags'].str.contains(tag)].shape[0]
+
+        farby=[]
+        for item in tag_counts.keys():
+            farby.append(f'#{random.randrange(256**3):06x}')
+        
+        # Convert the dictionary to lists for plotting
+        tag_labels = list(tag_counts.keys())
+        tag_values = list(tag_counts.values())
+
+        
+            # Create a subplot with two Pie Charts
+        fig = make_subplots(rows=1, cols=2 ,specs=[[{'type': 'xy'},{'type': 'domain'}]] )
+
+        fig.add_trace(
+            go.Bar(x=tag_labels, y=tag_values,marker=dict(color=farby), 
+                showlegend=False ,name='',hovertemplate='Level=%{x}, pocet=%{y}') ,
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            go.Pie(labels=tag_labels, values=tag_values,marker=dict(colors=farby),name='',
+                hovertemplate='Level: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
+            row=1, col=2
+        )
+
+        st.plotly_chart(fig)
 
