@@ -243,17 +243,17 @@ with tab2:
 
         fig.add_trace(
             go.Bar(x=tag_labels, y=tag_values,marker=dict(color=farby), 
-                showlegend=False ,name='',hovertemplate='Level=%{x}, pocet=%{y}') ,
+                showlegend=False ,name='',hovertemplate='Tag=%{x}, pocet=%{y}') ,
             row=1, col=1
         )
 
         fig.add_trace(
             go.Pie(labels=tag_labels, values=tag_values,marker=dict(colors=farby),name='',
-                hovertemplate='Level: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
+                hovertemplate='Tag: %{label}<br>pocet: %{value}<br>percento: %{percent}'),
             row=1, col=2
         )
 
         st.plotly_chart(fig)
     else:
-        st.write("Pre zobrazenie grafu Tagov  vyberte nejaké z ponuky")
+        st.write("Pre zobrazenie grafu Tagov  vyberte nejaké z ponuky (musí byť nastavené OR)")
 
